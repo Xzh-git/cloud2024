@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.cloud.gateway.filter.factory.SetPathGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -41,7 +40,7 @@ public class MyGatewayFilterFactory extends AbstractGatewayFilterFactory<MyGatew
                 if(request.getQueryParams().containsKey("atguigu")){
                     return chain.filter(exchange);
                 }else{
-                    exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
+                    exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);//400
                     return exchange.getResponse().setComplete();
                 }
             }
