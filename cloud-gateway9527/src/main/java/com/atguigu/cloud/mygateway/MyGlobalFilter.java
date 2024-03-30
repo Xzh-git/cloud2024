@@ -14,13 +14,11 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Slf4j
-public class MyGlobalFilter implements GlobalFilter, Ordered
-{
+public class MyGlobalFilter implements GlobalFilter, Ordered {
     public static final String BEGIN_VISIT_TIME = "begin_visit_time";//开始调用方法的时间
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
-    {
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         //1 先记录下访问接口的开始时间
         exchange.getAttributes().put(BEGIN_VISIT_TIME,System.currentTimeMillis());
         //2 返回统计的各个结果给后台
@@ -39,10 +37,7 @@ public class MyGlobalFilter implements GlobalFilter, Ordered
         }));
     }
 
-    /**
-     * 数字越小，优先级越高
-     * @return
-     */
+    /**数字越小，优先级越高*/
     @Override
     public int getOrder()
     {

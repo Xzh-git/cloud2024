@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
  * @create 2024-01-04 10:42
  */
 @Component
-public class MyRequestOriginParser implements RequestOriginParser
-{
+public class MyRequestOriginParser implements RequestOriginParser {
     @Override
     public String parseOrigin(HttpServletRequest request)
     {

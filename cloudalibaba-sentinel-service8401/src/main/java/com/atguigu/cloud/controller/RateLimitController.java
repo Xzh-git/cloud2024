@@ -24,12 +24,10 @@ public class RateLimitController
 
     @GetMapping("/rateLimit/byResource")
     @SentinelResource(value = "byResourceSentinelResource",blockHandler = "handlerBlockHandler")
-    public String byResource()
-    {
+    public String byResource() {
         return "按照资源名称SentinelResource限流测试OK，O(∩_∩)O";
     }
-    public String handlerBlockHandler(BlockException blockException)
-    {
+    public String handlerBlockHandler(BlockException blockException) {
         return "服务不可用触发了@SentinelResource启动，/(ㄒoㄒ)/~~";
     }
 

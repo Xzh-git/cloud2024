@@ -19,27 +19,21 @@ import java.util.List;
  * @create 2023-12-31 21:41
  */
 @Component
-public class MyGatewayFilterFactory extends AbstractGatewayFilterFactory<MyGatewayFilterFactory.Config>
-{
-    public MyGatewayFilterFactory()
-    {
+public class MyGatewayFilterFactory extends AbstractGatewayFilterFactory<MyGatewayFilterFactory.Config> {
+    public MyGatewayFilterFactory() {
         super(MyGatewayFilterFactory.Config.class);
     }
 
-
     @Override
-    public GatewayFilter apply(MyGatewayFilterFactory.Config config)
-    {
-        return new GatewayFilter()
-        {
+    public GatewayFilter apply(MyGatewayFilterFactory.Config config) {
+        return new GatewayFilter() {
             @Override
-            public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
-            {
+            public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
                 ServerHttpRequest request = exchange.getRequest();
-                System.out.println("进入了自定义网关过滤器MyGatewayFilterFactory，status："+config.getStatus());
-                if(request.getQueryParams().containsKey("atguigu")){
+                System.out.println("进入了自定义网关过滤器MyGatewayFilterFactory，status：" + config.getStatus());
+                if (request.getQueryParams().containsKey("atguigu")) {
                     return chain.filter(exchange);
-                }else{
+                } else {
                     exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);//400
                     return exchange.getResponse().setComplete();
                 }
@@ -52,9 +46,9 @@ public class MyGatewayFilterFactory extends AbstractGatewayFilterFactory<MyGatew
         return Arrays.asList("status");
     }
 
-    public static class Config
-    {
-        @Getter@Setter
+    public static class Config {
+        @Getter
+        @Setter
         private String status;//设定一个状态值/标志位，它等于多少，匹配和才可以访问
     }
 }
