@@ -32,8 +32,7 @@ public class PayAlibabaController
     //openfeign+sentinel进行服务降级和流量监控的整合处理case
     @GetMapping(value = "/pay/nacos/get/{orderNo}")
     @SentinelResource(value = "getPayByOrderNo",blockHandler = "handlerBlockHandler")
-    public ResultData getPayByOrderNo(@PathVariable("orderNo") String orderNo)
-    {
+    public ResultData getPayByOrderNo(@PathVariable("orderNo") String orderNo) {
         //模拟从数据库查询出数据并赋值给DTO
         PayDTO payDTO = new PayDTO();
 
@@ -45,8 +44,7 @@ public class PayAlibabaController
 
         return ResultData.success("查询返回值："+payDTO);
     }
-    public ResultData handlerBlockHandler(@PathVariable("orderNo") String orderNo, BlockException exception)
-    {
+    public ResultData handlerBlockHandler(@PathVariable("orderNo") String orderNo, BlockException exception) {
         return ResultData.fail(ReturnCodeEnum.RC500.getCode(),"getPayByOrderNo服务不可用，" +
                 "触发sentinel流控配置规则"+"\t"+"o(╥﹏╥)o");
     }

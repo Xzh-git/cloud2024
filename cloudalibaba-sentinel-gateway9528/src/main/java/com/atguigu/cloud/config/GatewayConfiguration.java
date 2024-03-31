@@ -29,8 +29,7 @@ import java.util.*;
  * @create 2024-01-05 14:02
  */
 @Configuration
-public class GatewayConfiguration
-{
+public class GatewayConfiguration {
     private final List<ViewResolver> viewResolvers;
     private final ServerCodecConfigurer serverCodecConfigurer;
 
@@ -54,31 +53,25 @@ public class GatewayConfiguration
     }
 
     @PostConstruct
-    public void doInit()
-    {
+    public void doInit() {
         //自己动手，丰衣足食
-        //initGatewayRules();
+        //initGatewayRules(); //官网demo
         initBlockHandler();
     }
 
     //处理+自定义返回的例外信息内容，类似我们的调用触发了流控规则保护
-    private void initBlockHandler()
-    {
+    private void initBlockHandler() {
         Set<GatewayFlowRule> rules = new HashSet<>();
         rules.add(new GatewayFlowRule("pay_routh1").setCount(2).setIntervalSec(1));
-
         GatewayRuleManager.loadRules(rules);
 
-        BlockRequestHandler handler = new BlockRequestHandler()
-        {
+        BlockRequestHandler handler = new BlockRequestHandler() {
             @Override
-            public Mono<ServerResponse> handleRequest(ServerWebExchange exchange, Throwable t)
-            {
+            public Mono<ServerResponse> handleRequest(ServerWebExchange exchange, Throwable t) {
+                //BlockHandler返回内容
                 Map<String,String> map = new HashMap<>();
-
                 map.put("errorCode", HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase());
                 map.put("errorMessage", "请求太过频繁，系统忙不过来，触发限流(sentinel+gataway整合Case)");
-
                 return ServerResponse.status(HttpStatus.TOO_MANY_REQUESTS)
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromValue(map));
