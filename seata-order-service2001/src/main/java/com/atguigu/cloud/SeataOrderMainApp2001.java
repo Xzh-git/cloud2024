@@ -13,7 +13,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @MapperScan("com.atguigu.cloud.mapper") //import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient //服务注册和发现
-@EnableFeignClients
+@EnableFeignClients //feign
 public class SeataOrderMainApp2001
 {
     public static void main(String[] args)
